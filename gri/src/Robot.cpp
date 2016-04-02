@@ -56,13 +56,13 @@ void Robot::loadSettings(XMLDocument* doc)
 		{
 			setPeriod(DEFUALT_MAIN_THREAD_PERIOD);
 			setPriority(static_cast<gsi::Thread::ThreadPriority>(DEFUALT_MAIN_THREAD_PRIORITY));
-			settings_file_exists = true;
 		}
 	}
 	else
 	{
 		printf("Robot::%s::%d: Error, no <Robot> element\n",__INFO__);
 		printf("Robot::%s::%d: Assigning defualt settings\n",__INFO__);
+		settings_file_exists = false;
 	}
 }
 
