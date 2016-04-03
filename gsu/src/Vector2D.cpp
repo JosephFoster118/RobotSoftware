@@ -1,7 +1,7 @@
-#include "gri/Vector2D.h"
+#include "gsu/Vector2D.h"
 
 
-namespace gri
+namespace gsu
 {
 
 Vector2D::Vector2D()

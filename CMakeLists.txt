@@ -27,6 +27,7 @@ message(STATUS "Library directory is ${LIBRARY_OUTPUT_PATH}")
 
 
 add_subdirectory(gsi)
+add_subdirectory(gsu)
 add_subdirectory(gri)
 add_subdirectory(TestRobot)
 #

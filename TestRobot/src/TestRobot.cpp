@@ -1,6 +1,7 @@
 #include "TestRobot.h"
 
 using namespace gri;
+using namespace gsu;
 
 TestRobot::TestRobot()
 {
@@ -32,7 +33,7 @@ void TestRobot::disableInit()
 }
 void TestRobot::disablePeriodic()
 {
-	printf("TestRobot::%s::%d: Disabled Periodic\n",__INFO__);
+	
 }
 void TestRobot::teleopInit()
 {

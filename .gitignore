@@ -23,7 +23,6 @@ $RECYCLE.BIN/
 
 # OSX
 # =========================
-
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -45,3 +44,17 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+#CMake
+build/*
+
+#Project Files
+*/.cproject
+*/.project
+*/.settings/*
+*/build.*
+
+#Built Files
+*.a
+
+

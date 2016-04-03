@@ -99,7 +99,11 @@ void Robot::doPeriodic()
 		}break;
 		defualt:
 		{
-			
+			if(reinit == true)
+			{
+				printf("Robot::%s::%d: Error, Unknown mode\n");
+				reinit = false;
+			}
 		}break;
 	}
 }

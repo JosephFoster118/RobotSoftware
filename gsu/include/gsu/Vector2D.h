@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace gri
+namespace gsu
 {
 
 class Vector2D

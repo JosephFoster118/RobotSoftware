@@ -1,0 +1,16 @@
+
+
+
+namespace gri
+{
+class RobotPacket
+{
+	
+};
+
+}
+
+
+
+
+

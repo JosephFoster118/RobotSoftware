@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "gri/Robot.h"
 #include "gri/RobotMain.h"
-#include "gri/Vector2D.h"
+#include "gsu/Vector2D.h"
 
 class TestRobot: public gri::Robot
 {

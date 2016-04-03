@@ -18,12 +18,14 @@ file (GLOB HDRS "include/*.h")
 include_directories(include)
 include_directories(../gsi/include)
 include_directories(../gri/include)
+include_directories(../gsu/include)
 
 add_executable(${PROJECT_NAME} ${HDRS} ${SRCS})
 
 link_directories(${LIBRARY_OUTPUT_PATH})
 find_library(GSI gsi PATH lib)
 find_library(GRI gri PATH lib)
+find_library(GRI gsu PATH lib)
 if(GSI)
     #found
     message(STATUS "Library Not Found")
@@ -34,5 +36,6 @@ endif()
 find_package (Threads)
 
 target_link_libraries(${PROJECT_NAME} gsi)
+target_link_libraries(${PROJECT_NAME} gsu)
 target_link_libraries(${PROJECT_NAME} gri)
 target_link_libraries (${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
