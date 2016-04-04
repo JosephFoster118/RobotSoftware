@@ -25,7 +25,7 @@ add_executable(${PROJECT_NAME} ${HDRS} ${SRCS})
 link_directories(${LIBRARY_OUTPUT_PATH})
 find_library(GSI gsi PATH lib)
 find_library(GRI gri PATH lib)
-find_library(GRI gsu PATH lib)
+find_library(GSU gsu PATH lib)
 if(GSI)
     #found
     message(STATUS "Library Not Found")

@@ -18,6 +18,7 @@ file (GLOB HDRS "include/${PROJECT_NAME}/*.h")
 include_directories(include)
 include_directories(../gsi/include)
 include_directories(../gri/include)
+include_directories(../gsu/include)
 
 add_library(${PROJECT_NAME} ${HDRS} ${SRCS})
 target_link_libraries(${PROJECT_NAME} gsi)

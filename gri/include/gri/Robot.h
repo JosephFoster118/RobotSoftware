@@ -1,9 +1,12 @@
-#pragma once
+#ifndef ROBOT_H
+#define ROBOT_H
 #include <stdio.h>
 #include <stdlib.h>
 #include "gsi/PeriodicThread.h"
 #include "gri/tinyxml2.h"
-
+#include "gri/RobotInclude.h"
+#include "gri/RobotPacket.h"
+#include "gsu/Callback.h"
 
 //Defines
 #define __INFO__ __FUNCTION__,__LINE__
@@ -38,13 +41,14 @@ else\
 #define DEFUALT_MAIN_THREAD_PRIORITY 0
 
 
+
 namespace gri
 {
 	
 using namespace tinyxml2;
 
 
-class Robot: public gsi::PeriodicThread
+class Robot: public gsi::PeriodicThread,public gsu::Callback
 {
 	public:
 		Robot();
@@ -55,7 +59,10 @@ class Robot: public gsi::PeriodicThread
 		virtual void autonomousInit() = 0;
 		virtual void autonomousPeriodic() = 0;
 		
-		enum Mode {DISABLED = 0, TELEOP, AUTONOMOUS, EMERGANCY_STOP};
+		void callbackNetwork(void* param);
+		RobotPacket* getRobotPacket();
+		enum Mode {DISABLED = 0, TELEOP = 1, AUTONOMOUS = 2, EMERGANCY_STOP = 3};
+		void changeMode(Mode m);
 	protected:
 		void doPeriodic();
 		XMLDocument* settings_file;
@@ -64,10 +71,12 @@ class Robot: public gsi::PeriodicThread
 		bool reinit;
 		bool settings_file_exists;
 		void loadSettings(XMLDocument* doc);
+		RobotPacket* packet;
+		
 };
 }
 
-
+#endif
 
 
 

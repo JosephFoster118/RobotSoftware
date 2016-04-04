@@ -31,6 +31,8 @@ Robot::Robot(): gsi::PeriodicThread("MainRobotThread",0.01)
 			settings_file_exists = true;
 		}
 	}
+	packet = new RobotPacket(this);
+	
 }
 
 void Robot::loadSettings(XMLDocument* doc)
@@ -108,6 +110,42 @@ void Robot::doPeriodic()
 	}
 }
 
+void Robot::callbackNetwork(void* param)
+{
+	printf("Robot::%s::%d: Network Callback called\n",__INFO__);
+	printf("Robot::%s::%d: Packet size [%d]\n",__INFO__,packet->getPacketSize());
+	printf("Robot::%s::%d: Packet type [%d]\n",__INFO__,packet->getPacketType());
+	char data[1024];
+	memset(data,0,1024);
+	memcpy(data,packet->getData(),packet->getPacketSize());
+	
+	switch(packet->getPacketType())
+	{
+		case RobotPacket::HEART_BEAT:
+		{
+			
+		}break;
+		case RobotPacket::MODE_CHANGE:
+		{
+			uint32_t m = 0;
+			memcpy(&m,data,4);
+			changeMode(static_cast<Mode>(m));
+			
+		}break;
+	}
+	
+}
+
+RobotPacket* Robot::getRobotPacket()
+{
+	return packet;
+}
+
+void Robot::changeMode(Mode m)
+{
+	reinit = true;
+	mode = m;
+}
 
 }
 
