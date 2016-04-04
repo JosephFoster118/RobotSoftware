@@ -6,8 +6,6 @@
 #include "RobotInclude.h"
 #include "gsu/Callback.h"
 
-#define POINTER_OFFSET(start, offset) ((char *) start + (offset))
-
 namespace gri
 {
 	

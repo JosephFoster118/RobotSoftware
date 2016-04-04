@@ -6,6 +6,7 @@
 #include "gri/tinyxml2.h"
 #include "gri/RobotInclude.h"
 #include "gri/RobotPacket.h"
+#include "gri/Controller.h"
 #include "gsu/Callback.h"
 
 //Defines
@@ -63,6 +64,7 @@ class Robot: public gsi::PeriodicThread,public gsu::Callback
 		RobotPacket* getRobotPacket();
 		enum Mode {DISABLED = 0, TELEOP = 1, AUTONOMOUS = 2, EMERGANCY_STOP = 3};
 		void changeMode(Mode m);
+		Controller* getController();
 	protected:
 		void doPeriodic();
 		XMLDocument* settings_file;
@@ -72,6 +74,7 @@ class Robot: public gsi::PeriodicThread,public gsu::Callback
 		bool settings_file_exists;
 		void loadSettings(XMLDocument* doc);
 		RobotPacket* packet;
+		Controller* controller;
 		
 };
 }

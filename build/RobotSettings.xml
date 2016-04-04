@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Robot>
 	<MainThread>
-		<Period>0.5</Period>
+		<Period>0.05</Period>
 		<Priority>0</Priority>
 	</MainThread>
 </Robot>

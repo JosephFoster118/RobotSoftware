@@ -14,7 +14,7 @@ namespace gri
 	
 	bool RobotPacket::parseData(void* data)
 	{
-		printf("data recieved (%p)\n",data);
+		//printf("data recieved (%p)\n",data);
 		//Parse Header
 		uint8_t type;
 		memcpy(&packet_size,data,4);
@@ -38,7 +38,7 @@ namespace gri
 			}break;
 			case CONTROLLER_DATA:
 			{
-				printf("RobotPacket::%s::%d: Controller data recieved\n",__INFO__);
+				//printf("RobotPacket::%s::%d: Controller data recieved\n",__INFO__);
 			}break;
 			case GUI_DATA:
 			{

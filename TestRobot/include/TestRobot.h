@@ -2,8 +2,10 @@
 
 #include <stdio.h>
 #include "gri/Robot.h"
+#include "gri/Controller.h"
 #include "gri/RobotMain.h"
 #include "gsu/Vector2D.h"
+#include <math.h>
 
 class TestRobot: public gri::Robot
 {
@@ -15,6 +17,8 @@ class TestRobot: public gri::Robot
 	void teleopPeriodic();
 	void autonomousInit();
 	void autonomousPeriodic();
+	private:
+	gri::Controller* controller;
 };
 
 

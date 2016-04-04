@@ -32,6 +32,7 @@ Robot::Robot(): gsi::PeriodicThread("MainRobotThread",0.01)
 		}
 	}
 	packet = new RobotPacket(this);
+	controller = new Controller();
 	
 }
 
@@ -112,9 +113,9 @@ void Robot::doPeriodic()
 
 void Robot::callbackNetwork(void* param)
 {
-	printf("Robot::%s::%d: Network Callback called\n",__INFO__);
-	printf("Robot::%s::%d: Packet size [%d]\n",__INFO__,packet->getPacketSize());
-	printf("Robot::%s::%d: Packet type [%d]\n",__INFO__,packet->getPacketType());
+	//printf("Robot::%s::%d: Network Callback called\n",__INFO__);
+	//printf("Robot::%s::%d: Packet size [%d]\n",__INFO__,packet->getPacketSize());
+	//printf("Robot::%s::%d: Packet type [%d]\n",__INFO__,packet->getPacketType());
 	char data[1024];
 	memset(data,0,1024);
 	memcpy(data,packet->getData(),packet->getPacketSize());
@@ -132,6 +133,10 @@ void Robot::callbackNetwork(void* param)
 			changeMode(static_cast<Mode>(m));
 			
 		}break;
+		case RobotPacket::CONTROLLER_DATA:
+		{
+			controller->parseControllerData(data);
+		}break;
 	}
 	
 }
@@ -145,6 +150,11 @@ void Robot::changeMode(Mode m)
 {
 	reinit = true;
 	mode = m;
+}
+
+Controller* Robot::getController()
+{
+	return controller;
 }
 
 }

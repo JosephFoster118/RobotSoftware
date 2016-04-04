@@ -14,7 +14,8 @@ class tester: public gsi::Thread
 	
 	void run()
 	{
-		gsi::Thread::sleep(5);
+		gsi::Thread::sleep(2.0);
+		//Enable robot
 		char* data = new char[512];
 		uint32_t size = 512;
 		uint8_t type = 0x01;
@@ -24,58 +25,44 @@ class tester: public gsi::Thread
 		memcpy(data + 4,&type,1);
 		memcpy(data + 5,&mode,1);
 		packet->parseData(data);
-		gsi::Thread::sleep(5);
-		mode = 0x00;
-		memset(data,0,512);
-		memcpy(data,&size,4);
-		memcpy(data + 4,&type,1);
-		memcpy(data + 5,&mode,1);
-		packet->parseData(data);
-		gsi::Thread::sleep(5);
-		mode = 0x02;
-		memset(data,0,512);
-		memcpy(data,&size,4);
-		memcpy(data + 4,&type,1);
-		memcpy(data + 5,&mode,1);
-		packet->parseData(data);
-		gsi::Thread::sleep(5);
-		mode = 0x00;
-		memset(data,0,512);
-		memcpy(data,&size,4);
-		memcpy(data + 4,&type,1);
-		memcpy(data + 5,&mode,1);
-		packet->parseData(data);
-		
-		for(uint32_t i = 0; i < 5000; i++)
+		//Send controller packets
+		for(uint32_t i = 0; i < 300000; i++)
 		{
-		mode = 0x01;
 		memset(data,0,512);
+		size = 52;
+		type = 0x03;
+		uint8_t controller_cnt = 1;
+		uint8_t axis_count = 2;
+		uint8_t button_count = 0;
 		memcpy(data,&size,4);
 		memcpy(data + 4,&type,1);
-		memcpy(data + 5,&mode,1);
+		memcpy(data + 5,&controller_cnt,1);
+		memcpy(data + 6,&axis_count,1);
+		memcpy(data + 7,&button_count,1);
+		
+		uint32_t offset = 8;
+		double axis_value_1 = sin(((double(i)*R_PI*2.0)*0.01)/4.0);
+		double axis_value_2 = cos(((double(i)*R_PI*2.0)*0.01)/4.0);
+		memcpy(data + offset,&axis_value_1,sizeof(double));
+		offset += 8;
+		memcpy(data + offset,&axis_value_2,sizeof(double));
+		offset += 8;
 		packet->parseData(data);
-		gsi::Thread::sleep(5);
-		mode = 0x00;
-		memset(data,0,512);
-		memcpy(data,&size,4);
-		memcpy(data + 4,&type,1);
-		memcpy(data + 5,&mode,1);
-		packet->parseData(data);
-		gsi::Thread::sleep(5);
-		mode = 0x02;
-		memset(data,0,512);
-		memcpy(data,&size,4);
-		memcpy(data + 4,&type,1);
-		memcpy(data + 5,&mode,1);
-		packet->parseData(data);
-		gsi::Thread::sleep(5);
-		mode = 0x00;
-		memset(data,0,512);
-		memcpy(data,&size,4);
-		memcpy(data + 4,&type,1);
-		memcpy(data + 5,&mode,1);
-		packet->parseData(data);
+		gsi::Thread::sleep(0.01);
 		}
+		
+		
+		gsi::Thread::sleep(50000);
+		//Disable robot
+		type = 0x01;
+		mode = 0x00;
+		memset(data,0,512);
+		memcpy(data,&size,4);
+		memcpy(data + 4,&type,1);
+		memcpy(data + 5,&mode,1);
+		packet->parseData(data);
+		gsi::Thread::sleep(5);
+		
 	}
 	private:
 	RobotPacket* packet;
@@ -85,6 +72,7 @@ class tester: public gsi::Thread
 TestRobot::TestRobot()
 {
 	printf("Initializing Test Robot\n");
+	controller = getController();
 	//Test Vector2D
 	//copy
 	Vector2D* vect = new Vector2D(25.2,3.58);
@@ -113,7 +101,7 @@ void TestRobot::disableInit()
 }
 void TestRobot::disablePeriodic()
 {
-	printf("TestRobot::%s::%d: Disabled periodic\n",__INFO__);
+	//printf("TestRobot::%s::%d: Disabled periodic\n",__INFO__);
 }
 void TestRobot::teleopInit()
 {
@@ -121,7 +109,9 @@ void TestRobot::teleopInit()
 }
 void TestRobot::teleopPeriodic()
 {
-	printf("TestRobot::%s::%d: Teleop periodic\n",__INFO__);
+	printf("TestRobot::%s::%d: Controller Data: axis0[%+.4f] axis1[%+.4f]\n",__INFO__,
+		controller->getAxis(0,0),
+		controller->getAxis(0,1));
 }
 void TestRobot::autonomousInit()
 {
