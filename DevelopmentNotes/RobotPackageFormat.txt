@@ -1,10 +1,9 @@
 ---The format of Robot Packets---
 
+<Pachage> :== <Header> <Data>
 
-+HEADER *Describes the contents of the message* (5 bytes)
-	-uint32: package size
-	-uint8: Type of package
-+HEADER END
+<Header> :== [uint32: package size] [uint8: Type of package] *Describes the contents of the message* (5 bytes)
+
 
 ---Types of packages---
 0x00:	Heart Beat
