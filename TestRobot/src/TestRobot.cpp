@@ -26,7 +26,7 @@ class tester: public gsi::Thread
 		memcpy(data + 5,&mode,1);
 		packet->parseData(data);
 		//Send controller packets
-		for(uint32_t i = 0; i < 300000; i++)
+		for(uint32_t i = 0; i < 300000000; i++)
 		{
 		memset(data,0,512);
 		size = 52;
