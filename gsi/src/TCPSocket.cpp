@@ -31,7 +31,8 @@ namespace gsi
 	TCPSocket::TCPSocket()
 	{
 #if defined (PTHREADS)
-		printf("Creating Sovket\n");
+		printf("Creating Socket\n");
+		
 #endif
 		
 	}
@@ -39,7 +40,8 @@ namespace gsi
 	TCPSocket::TCPSocket(uint16_t port, SocketType st)
 	{
 #if defined (PTHREADS)
-		printf("Creating Sovket\n");
+		printf("Creating Socket\n");
+		
 #endif
 	}
 	

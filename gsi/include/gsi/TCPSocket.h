@@ -55,8 +55,10 @@ class TCPSocket
 		};
 		TCPSocket();
 		TCPSocket(uint16_t port, SocketType st = CLIENT);
+	private:
+#if defined (PTHREADS)
 		
-	
+#endif
 };
 
 
