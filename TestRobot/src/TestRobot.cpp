@@ -14,7 +14,7 @@ class tester: public gsi::Thread
 	
 	void run()
 	{
-		gsi::Thread::sleep(2.0);
+		gsi::Thread::sleep(5.0);
 		//Enable robot
 		char* data = new char[512];
 		uint32_t size = 512;
@@ -26,7 +26,7 @@ class tester: public gsi::Thread
 		memcpy(data + 5,&mode,1);
 		packet->parseData(data);
 		//Send controller packets
-		for(uint32_t i = 0; i < 300000000; i++)
+		for(uint32_t i = 0; i < 300; i++)
 		{
 		memset(data,0,512);
 		size = 52;
@@ -52,7 +52,7 @@ class tester: public gsi::Thread
 		}
 		
 		
-		gsi::Thread::sleep(50000);
+		//gsi::Thread::sleep(0);
 		//Disable robot
 		type = 0x01;
 		mode = 0x00;
@@ -73,6 +73,8 @@ TestRobot::TestRobot()
 {
 	printf("Initializing Test Robot\n");
 	controller = getController();
+	test_out1 = new gri::GPIO(50);
+	test_out2 = new gri::GPIO(60);
 	//Test Vector2D
 	//copy
 	Vector2D* vect = new Vector2D(25.2,3.58);
@@ -91,6 +93,7 @@ TestRobot::TestRobot()
 	*vect = *vect_a - *vect_b - *vect_c;
 	printf("Values: (%.3f,%.3f)\n",vect->getX(),vect->getY());
 	tester* test = new tester(getRobotPacket());
+	
 	test->start();
 }
 
@@ -98,14 +101,25 @@ TestRobot::TestRobot()
 void TestRobot::disableInit()
 {
 	printf("TestRobot::%s::%d: Disabled init\n",__INFO__);
+	test_out1->setValue(1);
+	test_out2->setValue(1);
+	cnt = 0;
 }
 void TestRobot::disablePeriodic()
 {
 	//printf("TestRobot::%s::%d: Disabled periodic\n",__INFO__);
+	if((cnt%6) == 0)
+	{
+		test_out1->setValue(!test_out1->getValue());
+		test_out2->setValue(!test_out2->getValue());
+	}
+	cnt++;
 }
 void TestRobot::teleopInit()
 {
 	printf("TestRobot::%s::%d: Teleop init\n",__INFO__);
+	test_out1->setValue(0);
+	test_out2->setValue(0);
 }
 void TestRobot::teleopPeriodic()
 {

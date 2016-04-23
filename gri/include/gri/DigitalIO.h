@@ -5,31 +5,25 @@
 #include <string>
 #include "gri/RobotInclude.h"
 #include "gsi/Mutex.h"
-
-#define MODULE_NAME_SIZE 128
+#include "gri/Module.h"
 
 namespace gri
 {
 
-class Module
+class DigitalIO: public Module
 {
 	public:
-	Module();
-	~Module();
-	
+		DigitalIO();
+		~DigitalIO();
+		virtual void setValue(bool v) = 0;
+		virtual bool getValue() = 0;
 	protected:
-	char module_name[MODULE_NAME_SIZE];
+		bool value;
 	private:
-	
-	static Module* getModule(std::string n);
-	
+		
 };
 
-
-
 }
-
-
 
 
 
